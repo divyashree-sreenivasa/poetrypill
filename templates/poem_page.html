@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style> 
+    .poem, 
+    .poetName {
+        margin-bottom: 2em;
+    }
+
+    .poemContent {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 2;
+    }
+</style>
+
+    <div class="content">
+        <div class="poem">
+            <div class="poemTitle">
+                <h3>{{poem.title}}</h3>
+            </div>
+            <div class="poetName" style="font-style: italic;">By <span style="text-decoration: underline;">{{poem.poet}}</span></div>
+            <pre class="poemContent">{{poem.poem}}</pre>
+        </div>
+    
+        <div class="form-group row">
+            <div class="col-sm-12">
+              <button class="delete btn btn-secondary" style="margin-right:1em;">Delete Poem</button>
+              <button class="edit btn btn-secondary" onclick="window.location.href='/poems/{{poem.key().id()}}/edit'">Edit Poem</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $('.delete').click(function() {
+        var confirmalert = confirm("Do you really want to delete this poem?");
+        if (confirmalert == true) {
+                $.ajax({
+                url: "/poems/{{poem.key().id()}}/delete",
+                type: 'POST',
+                data: {
+                    poem_id: {{ poem.key().id() }}
+                },
+                success: function( result ) {
+                    $( ".content" ).html( "Poem Deleted" );
+                }
+            });
+        } else {
+            console.log("no confirm!!");
+        }
+    });    
+</script>
+{% endblock %}

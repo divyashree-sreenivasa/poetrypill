@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style> 
+    .poem, 
+    .poetName {
+        margin-bottom: 2em;
+    }
+
+    .poemContent {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 2;
+    }
+</style>
+
+{% for poem in poems %}
+    <div class="poem">
+        <div class="poemTitle">
+            <a href="poems/{{ poem.key().id() }}"><h3>{{poem.title}}</h3></a>
+        </div>
+        <div class="poetName" style="font-style: italic;">By <span style="text-decoration: underline    ;">{{poem.poet}}</span></div>
+        <pre class="poemContent">{{poem.poem}}</pre>
+    </div>
+{% endfor %}
+
+{% endblock %}
